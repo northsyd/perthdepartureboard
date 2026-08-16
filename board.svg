@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 304 191">
+
+  <defs>
+    <style>
+      .blue {
+        fill: #002237;
+      }
+
+      .yellow {
+        fill: #f2b843;
+      }
+
+      .black-text {
+        fill: #221f20;
+        font-family: Overpass-ExtraBold, Overpass, sans-serif;
+        font-weight: 700;
+      }
+
+      .white-bold {
+        fill: #fff;
+        font-family: Overpass-Bold, Overpass, sans-serif;
+        font-weight: 700;
+      }
+
+      .white-semi {
+        fill: #fff;
+        font-family: Overpass-SemiBold, Overpass, sans-serif;
+        font-weight: 600;
+      }
+
+      .header {
+        font-size: 11px;
+      }
+
+      .large {
+        font-size: 20px;
+      }
+
+      .medium {
+        font-size: 17px;
+      }
+
+      .small-large {
+        font-size: 15px;
+      }
+
+      .line {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: .5px;
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect class="yellow" width="304" height="30"/>
+  <rect class="blue" y="30" width="304" height="161"/>
+
+  <!-- HEADER -->
+
+  <text class="black-text header" transform="translate(10.41 20.65)">
+    Platform
+  </text>
+
+  <text id="platform" class="black-text header" transform="translate(84.42 20.65)">
+    5
+  </text>
+
+  <text class="black-text header" transform="translate(186.41 20.65)">
+    Mins
+  </text>
+
+  <text class="black-text header" transform="translate(219.42 20.65)">
+    Pattern
+  </text>
+
+  <text class="black-text header" transform="translate(268.41 20.65)">
+    Cars
+  </text>
+
+
+  <!-- FIRST SERVICE -->
+
+  <text id="destination" class="white-bold large" transform="translate(10.41 55.65)">
+    Cockburn Central
+  </text>
+
+  <text id="mins" class="white-bold large" transform="translate(190.42 55.65)">
+    12
+  </text>
+
+  <text id="pattern" class="white-bold large" transform="translate(225.42 55.65)">
+    TP
+  </text>
+
+  <text id="cars" class="white-bold large" transform="translate(270.42 55.65)">
+    6
+  </text>
+
+  <line class="line" x1="297.98" y1="66.56" x2="6.44" y2="66.56"/>
+
+
+  <!-- STOPS -->
+
+  <text class="white-bold medium" transform="translate(11.72 88.43)">
+    Stops
+    <tspan x="24.34" y="20.4">at:</tspan>
+  </text>
+
+  <text class="white-semi" font-size="11px" transform="translate(66.17 79.36)">
+    Perth Stadium, Carlisle, Oats Street, Queens
+    <tspan x="0" y="13.2">
+      Park, Cannington, Beckenham, Thornlie,
+    </tspan>
+    <tspan x="0" y="26.4">
+      Nicholson Road, Ranford Road, Cockburn
+    </tspan>
+    <tspan x="0" y="39.6">
+      Central
+    </tspan>
+  </text>
+
+  <line class="line" x1="297.98" y1="126.56" x2="6.44" y2="126.56"/>
+
+
+  <!-- SECOND SERVICE -->
+
+  <text class="white-bold header" transform="translate(11.74 141.44)">
+    Then:
+  </text>
+
+  <text id="then" class="white-bold small-large" transform="translate(11.72 157.99)">
+    Cockburn Central
+  </text>
+
+  <text class="white-bold header" transform="translate(190.76 141.44)">
+    Mins
+  </text>
+
+  <text id="secondMins" class="white-bold small-large" transform="translate(194.18 158)">
+    27
+  </text>
+
+  <text class="white-bold header" transform="translate(223.04 141.44)">
+    Pattern
+  </text>
+
+  <text id="secondPattern" class="white-bold small-large" transform="translate(233 157.99)">
+    TP
+  </text>
+
+  <line class="line" x1="297.98" y1="165.56" x2="6.44" y2="165.56"/>
+
+
+  <!-- CLOCK -->
+
+  <text id="time"
+        class="white-bold small-large"
+        text-anchor="end"
+        transform="translate(293 182.55)">
+    5:28 pm
+  </text>
+
+</svg>
