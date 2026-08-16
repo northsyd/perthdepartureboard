@@ -1,24 +1,44 @@
 let boardSvg;
 
 async function loadBoard() {
-    const response = await fetch("board.svg");
-    const svgText = await response.text();
+    try {
+        const response = await fetch("./board.svg");
 
-    const parser = new DOMParser();
-    const document = parser.parseFromString(svgText, "image/svg+xml");
+        if (!response.ok) {
+            throw new Error("Could not load board.svg");
+        }
 
-    boardSvg = document.documentElement;
+        const svgText = await response.text();
 
-    document.getElementById("board").appendChild(boardSvg);
+        const parser = new DOMParser();
+        const parsed = parser.parseFromString(
+            svgText,
+            "image/svg+xml"
+        );
 
-    updateBoard();
+        boardSvg = parsed.documentElement;
+
+        // Make sure it renders properly
+        boardSvg.removeAttribute("width");
+        boardSvg.removeAttribute("height");
+
+        document.getElementById("board").replaceChildren(boardSvg);
+
+        updateBoard();
+
+    } catch (error) {
+        console.error(error);
+
+        document.getElementById("board").innerHTML =
+            "<p style='color:red'>Couldn't load board.svg. Check that board.svg is in the same folder as index.html.</p>";
+    }
 }
 
 function setText(id, value) {
-    const element = boardSvg.getElementById(id);
+    const element = boardSvg.querySelector("#" + id);
 
     if (!element) {
-        console.warn(`Couldn't find SVG element: ${id}`);
+        console.warn("Missing SVG element:", id);
         return;
     }
 
@@ -26,51 +46,15 @@ function setText(id, value) {
 }
 
 function updateBoard() {
-
-    setText(
-        "platform",
-        document.getElementById("platformInput").value
-    );
-
-    setText(
-        "destination",
-        document.getElementById("destinationInput").value
-    );
-
-    setText(
-        "mins",
-        document.getElementById("minsInput").value
-    );
-
-    setText(
-        "pattern",
-        document.getElementById("patternInput").value
-    );
-
-    setText(
-        "cars",
-        document.getElementById("carsInput").value
-    );
-
-    setText(
-        "then",
-        document.getElementById("thenInput").value
-    );
-
-    setText(
-        "secondMins",
-        document.getElementById("secondMinsInput").value
-    );
-
-    setText(
-        "secondPattern",
-        document.getElementById("secondPatternInput").value
-    );
-
-    setText(
-        "time",
-        document.getElementById("timeInput").value
-    );
+    setText("platform", document.getElementById("platformInput").value);
+    setText("destination", document.getElementById("destinationInput").value);
+    setText("mins", document.getElementById("minsInput").value);
+    setText("pattern", document.getElementById("patternInput").value);
+    setText("cars", document.getElementById("carsInput").value);
+    setText("then", document.getElementById("thenInput").value);
+    setText("secondMins", document.getElementById("secondMinsInput").value);
+    setText("secondPattern", document.getElementById("secondPatternInput").value);
+    setText("time", document.getElementById("timeInput").value);
 }
 
 document
