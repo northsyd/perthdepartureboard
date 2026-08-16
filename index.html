@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departure Board Emulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main>
+        <h1>Departure Board Emulator</h1>
+
+        <div class="board-container">
+            <!-- The SVG gets loaded here -->
+            <div id="board"></div>
+        </div>
+
+        <section class="controls">
+
+            <label>
+                Platform
+                <input id="platformInput" value="5">
+            </label>
+
+            <label>
+                Destination
+                <input id="destinationInput" value="Cockburn Central">
+            </label>
+
+            <label>
+                Minutes
+                <input id="minsInput" value="12">
+            </label>
+
+            <label>
+                Pattern
+                <input id="patternInput" value="TP">
+            </label>
+
+            <label>
+                Cars
+                <input id="carsInput" value="6">
+            </label>
+
+            <label>
+                Then
+                <input id="thenInput" value="Cockburn Central">
+            </label>
+
+            <label>
+                Second Minutes
+                <input id="secondMinsInput" value="27">
+            </label>
+
+            <label>
+                Second Pattern
+                <input id="secondPatternInput" value="TP">
+            </label>
+
+            <label>
+                Time
+                <input id="timeInput" value="5:28 pm">
+            </label>
+
+            <button id="updateButton">UPDATE BOARD</button>
+
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
