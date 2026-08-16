@@ -1,4 +1,9 @@
-let boardSvg;
+let boardSvg = null;
+
+
+/* =========================================================
+   LOAD SVG BOARD
+   ========================================================= */
 
 async function loadBoard() {
     try {
@@ -19,6 +24,7 @@ async function loadBoard() {
 
         boardSvg = parsed.documentElement;
 
+        // Remove fixed dimensions so CSS can control the size
         boardSvg.removeAttribute("width");
         boardSvg.removeAttribute("height");
 
@@ -29,6 +35,7 @@ async function loadBoard() {
         updateBoard();
 
     } catch (error) {
+
         console.error(error);
 
         document.getElementById("board").innerHTML =
@@ -37,12 +44,25 @@ async function loadBoard() {
 }
 
 
+/* =========================================================
+   CHANGE TEXT IN SVG
+   ========================================================= */
+
 function setText(id, value) {
 
-    const element = boardSvg.querySelector("#" + id);
+    if (!boardSvg) {
+        return;
+    }
+
+    const element =
+        boardSvg.querySelector("#" + id);
 
     if (!element) {
-        console.warn("Missing SVG element:", id);
+        console.warn(
+            "Missing SVG element:",
+            id
+        );
+
         return;
     }
 
@@ -50,82 +70,158 @@ function setText(id, value) {
 }
 
 
+/* =========================================================
+   UPDATE STOP LIST
+   ========================================================= */
+
 function updateStops() {
+
+    if (!boardSvg) {
+        return;
+    }
 
     const stopsElement =
         boardSvg.querySelector("#stops");
 
     if (!stopsElement) {
-        console.warn("Missing SVG element: stops");
+        console.warn(
+            "Missing SVG element: stops"
+        );
+
         return;
     }
 
-    const stops = document
-        .getElementById("stopsInput")
-        .value
+
+    const input =
+        document.getElementById("stopsInput");
+
+
+    if (!input) {
+        console.warn(
+            "Missing HTML element: stopsInput"
+        );
+
+        return;
+    }
+
+
+    const stops = input.value
         .split("\n")
         .map(stop => stop.trim())
         .filter(stop => stop !== "");
 
-    // Remove existing stop lines
+
+    // Remove old stops
+
     stopsElement.replaceChildren();
 
-    // Maximum number of lines that fit on the board
+
+    // Maximum number of stops that fit
+    // in the current board design
+
     const maxStops = 4;
 
-    stops.slice(0, maxStops).forEach((stop, index) => {
 
-        const tspan =
-            document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "tspan"
-            );
+    stops
+        .slice(0, maxStops)
+        .forEach((stop, index) => {
 
-        tspan.textContent = stop;
+            const tspan =
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "tspan"
+                );
 
-        tspan.setAttribute(
-            "x",
-            "66.17"
-        );
 
-        tspan.setAttribute(
-            "y",
-            index === 0 ? "79.36" : "79.36"
-        );
+            tspan.textContent = stop;
 
-        if (index > 0) {
+
             tspan.setAttribute(
-                "dy",
-                "13.2"
+                "x",
+                "66.17"
             );
-        }
 
-        stopsElement.appendChild(tspan);
-    });
+
+            if (index === 0) {
+
+                tspan.setAttribute(
+                    "y",
+                    "79.36"
+                );
+
+            } else {
+
+                tspan.setAttribute(
+                    "x",
+                    "66.17"
+                );
+
+                tspan.setAttribute(
+                    "dy",
+                    "13.2"
+                );
+            }
+
+
+            stopsElement.appendChild(tspan);
+        });
 }
 
 
+/* =========================================================
+   UPDATE TOP BAR COLOUR
+   ========================================================= */
+
 function updateColour() {
 
-    const colour =
-        document
-            .getElementById("colorInput")
-            .value
-            .trim();
-
-    // Basic HEX validation
-    if (!/^#[0-9A-Fa-f]{6}$/.test(colour)) {
-        console.warn("Invalid HEX colour:", colour);
+    if (!boardSvg) {
         return;
     }
+
+
+    const input =
+        document.getElementById("colorInput");
+
+
+    if (!input) {
+        console.warn(
+            "Missing HTML element: colorInput"
+        );
+
+        return;
+    }
+
+
+    const colour =
+        input.value.trim();
+
+
+    // Accept only 6-digit HEX colours
+
+    if (!/^#[0-9A-Fa-f]{6}$/.test(colour)) {
+
+        console.warn(
+            "Invalid HEX colour:",
+            colour
+        );
+
+        return;
+    }
+
 
     const topBar =
         boardSvg.querySelector("#topBar");
 
+
     if (!topBar) {
-        console.warn("Missing SVG element: topBar");
+
+        console.warn(
+            "Missing SVG element: topBar"
+        );
+
         return;
     }
+
 
     topBar.setAttribute(
         "fill",
@@ -134,64 +230,182 @@ function updateColour() {
 }
 
 
+/* =========================================================
+   UPDATE ENTIRE BOARD
+   ========================================================= */
+
 function updateBoard() {
 
-    setText(
-        "platform",
-        document.getElementById("platformInput").value
-    );
+    if (!boardSvg) {
+        return;
+    }
 
-    setText(
-        "destination",
-        document.getElementById("destinationInput").value
-    );
 
-    setText(
-        "mins",
-        document.getElementById("minsInput").value
-    );
+    /* Platform */
 
-    setText(
-        "pattern",
-        document.getElementById("patternInput").value
-    );
+    const platformInput =
+        document.getElementById("platformInput");
 
-    setText(
-        "cars",
-        document.getElementById("carsInput").value
-    );
+    if (platformInput) {
+        setText(
+            "platform",
+            platformInput.value
+        );
+    }
 
-    setText(
-        "then",
-        document.getElementById("thenInput").value
-    );
 
-    setText(
-        "secondMins",
-        document.getElementById("secondMinsInput").value
-    );
+    /* Destination */
 
-    setText(
-        "secondPattern",
-        document.getElementById("secondPatternInput").value
-    );
+    const destinationInput =
+        document.getElementById(
+            "destinationInput"
+        );
 
-    setText(
-        "time",
-        document.getElementById("timeInput").value
-    );
+    if (destinationInput) {
+        setText(
+            "destination",
+            destinationInput.value
+        );
+    }
+
+
+    /* Minutes */
+
+    const minsInput =
+        document.getElementById(
+            "minsInput"
+        );
+
+    if (minsInput) {
+        setText(
+            "mins",
+            minsInput.value
+        );
+    }
+
+
+    /* Pattern */
+
+    const patternInput =
+        document.getElementById(
+            "patternInput"
+        );
+
+    if (patternInput) {
+        setText(
+            "pattern",
+            patternInput.value
+        );
+    }
+
+
+    /* Cars */
+
+    const carsInput =
+        document.getElementById(
+            "carsInput"
+        );
+
+    if (carsInput) {
+        setText(
+            "cars",
+            carsInput.value
+        );
+    }
+
+
+    /* Then */
+
+    const thenInput =
+        document.getElementById(
+            "thenInput"
+        );
+
+    if (thenInput) {
+        setText(
+            "then",
+            thenInput.value
+        );
+    }
+
+
+    /* Second service minutes */
+
+    const secondMinsInput =
+        document.getElementById(
+            "secondMinsInput"
+        );
+
+    if (secondMinsInput) {
+        setText(
+            "secondMins",
+            secondMinsInput.value
+        );
+    }
+
+
+    /* Second service pattern */
+
+    const secondPatternInput =
+        document.getElementById(
+            "secondPatternInput"
+        );
+
+    if (secondPatternInput) {
+        setText(
+            "secondPattern",
+            secondPatternInput.value
+        );
+    }
+
+
+    /* Time */
+
+    const timeInput =
+        document.getElementById(
+            "timeInput"
+        );
+
+    if (timeInput) {
+        setText(
+            "time",
+            timeInput.value
+        );
+    }
+
+
+    /* Stops */
 
     updateStops();
+
+
+    /* Top bar colour */
+
     updateColour();
 }
 
 
-document
-    .getElementById("updateButton")
-    .addEventListener(
+/* =========================================================
+   UPDATE BUTTON
+   ========================================================= */
+
+const updateButton =
+    document.getElementById(
+        "updateButton"
+    );
+
+
+if (updateButton) {
+
+    updateButton.addEventListener(
         "click",
         updateBoard
     );
+}
 
+
+/* =========================================================
+   LOAD BOARD
+   ========================================================= */
 
 loadBoard();
